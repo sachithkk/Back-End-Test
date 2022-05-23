@@ -1,10 +1,37 @@
-const mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
 
-const productSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-    name: String,
-    price: Number,
+
+router.get('/', (req, res, next) => {
+    res.status(200).json({
+        message: 'Order were fetched'
+    });
 });
 
-const Product = mongoose.model('Product', productSchema);
-module.exports = Product; 
+router.post('/', (req, res, next) => {
+    const order = {
+        productId: req.body.productId,
+        quentity: req.body.quentity
+    }
+    res.status(200).json({
+        message: 'Order was created',
+        createOrder: order
+    });
+});
+
+router.get('/:orderId', (req, res, next) => {
+    const orderId = req.params.orderId;
+    res.status(200).json({
+        message: 'Order details',
+        orderId: orderId
+    });
+});
+
+router.delete('/:orderId', (req, res, next) => {
+    res.status(200).json({
+        message: 'Order deleted'
+    });
+});
+
+
+module.exports = router;
